@@ -24,25 +24,10 @@ class App extends React.Component {
   }
 
   setNewDates(newStart, newEnd) {
-    console.log(newStart, newEnd);
-    if (!newStart) {
-      this.setState({endDate: newEnd}, () => {
-        console.log('new endDate set');
-        this.getBitcoinData();
-      });
-    } else if (!newEnd) {
-      this.setState({startDate: newStart}, () => {
-        console.log('new startDate set');
-        this.getBitcoinData();
-      });
-    } else {
-      this.setState({startDate: newStart}, () => {
-        this.setState({endDate: newEnd}, () => {
-          console.log('new dates set');
-          this.getBitcoinData();
-        });
-      });
-    }
+    this.setState({ startDate: newStart, endDate: newEnd }, () => {
+      console.log('new dates set');
+      this.getBitcoinData();
+    });
   }
 
   getBitcoinData() {
@@ -53,7 +38,6 @@ class App extends React.Component {
       }
     })
       .then((res) => {
-        console.log('successfully got bitcoin data: ', res.data);
         this.processData(res.data)
       })
       .catch((err) => {
@@ -68,11 +52,8 @@ class App extends React.Component {
       dateArr.push(key);
       priceArr.push(data[key]);
     }
-    this.setState({ dates: dateArr }, () => {
-      console.log('dates have been populated');
-      this.setState({ prices: priceArr }, () => {
-        console.log('prices have been populated');
-      })
+    this.setState({ dates: dateArr, prices: priceArr }, () => {
+      console.log('dates & prices have been populated');
     })
   }
 
@@ -85,7 +66,7 @@ class App extends React.Component {
       <div>
         <ChartView dates={this.state.dates} prices={this.state.prices} />
         <br />
-        <DateForm setDates={this.setNewDates.bind(this)}/>
+        <DateForm setDates={this.setNewDates.bind(this)} />
       </div>
     )
   };
