@@ -12,20 +12,19 @@ class App extends React.Component {
       dates: [],
       prices: []
     };
+    this.setNewDates = this.setNewDates.bind(this);
   }
 
   setTodayDate() {
-    var d = new Date();
-    var today = d.toJSON().substring(0, 10)
+    const date = new Date();
+    const today = date.toJSON().substring(0, 10)
     this.setState({ endDate: today }, () => {
-      console.log('endDate set to today');
       this.getBitcoinData();
     })
   }
 
   setNewDates(newStart, newEnd) {
     this.setState({ startDate: newStart, endDate: newEnd }, () => {
-      console.log('new dates set');
       this.getBitcoinData();
     });
   }
@@ -46,15 +45,13 @@ class App extends React.Component {
   }
 
   processData(data) {
-    var dateArr = [];
-    var priceArr = [];
+    let dateArr = [];
+    let priceArr = [];
     for (var key in data) {
       dateArr.push(key);
       priceArr.push(data[key]);
     }
-    this.setState({ dates: dateArr, prices: priceArr }, () => {
-      console.log('dates & prices have been populated');
-    })
+    this.setState({ dates: dateArr, prices: priceArr });
   }
 
   componentDidMount() {
@@ -66,7 +63,7 @@ class App extends React.Component {
       <div>
         <ChartView dates={this.state.dates} prices={this.state.prices} />
         <br />
-        <DateForm setDates={this.setNewDates.bind(this)} />
+        <DateForm setDates={this.setNewDates} />
       </div>
     )
   };

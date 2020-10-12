@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 
 
 const ChartView = (props) => {
-  var data = {
+  let data = {
     labels: props.dates,
     datasets: [
       {
@@ -17,27 +17,28 @@ const ChartView = (props) => {
         data: props.prices
       }
     ]
-  }
+  };
+  var options = {
+    title: {
+      display: true,
+      text: 'Bitcoin Prices',
+      fontSize: 20
+    },
+    legend: {
+      display: true,
+      position: 'right'
+    },
+    elements: {
+      point: {
+        radius: 0
+      }
+    }
+  };
   return (
     <div>
       <Line
         data={data}
-        options={{
-          title: {
-            display: true,
-            text: 'Bitcoin Prices',
-            fontSize: 20
-          },
-          legend: {
-            display: true,
-            position: 'right'
-          },
-          elements: {
-            point: {
-              radius: 0
-            }
-          }
-        }}
+        options={options}
       />
     </div>
   )
